@@ -16,7 +16,15 @@ public class WhoISTime {
 
     public String getDate(){
         SimpleDateFormat formating = new SimpleDateFormat("YYYY:MM:dd HH:mm:ss");
-        return formating.format((time+(10800*1000)));
+
+        boolean needAddHours = true; // Type true if time on server car if lowest than your time zone
+        long var = time;
+        if(needAddHours){
+            int needHoursToAdd = 3;
+            var+=((3600*needHoursToAdd)*1000);
+        }
+
+        return formating.format(var);
     }
 
     public String getString(){
