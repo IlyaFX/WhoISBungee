@@ -1,0 +1,42 @@
+group 'ru.ilyafx'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'java'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+tasks.withType(JavaCompile){
+    options.encoding = "UTF-8"
+    sourceCompatibility = "1.8"
+    targetCompatibility = "1.8"
+}
+
+jar {
+    manifest {
+        attributes "Main-Class": "ru.ilyafx.hubplugin.HubPlugin"
+    }
+
+    from {
+        configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}
+
+task customFatJar(type: Jar) {
+    manifest {
+        attributes 'Main-Class': 'ru.ilyafx.hubplugin.HubPlugin'
+    }
+    baseName = 'all-in-one-jar'
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    with jar
+}
+
+dependencies {
+    compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.16.20'
+    compileOnly files("../BungeeCord.jar")
+    compile group: 'mysql', name: 'mysql-connector-java', version: '8.0.8-dmr'
+    compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.7'
+}

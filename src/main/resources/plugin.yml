@@ -1,0 +1,5 @@
+name: WhoIS
+description: WHOIS plugin
+version: 0.1
+author: ['Ilya_FX']
+main: ru.ilyafx.whois.WhoIS
